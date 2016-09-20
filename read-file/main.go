@@ -3,8 +3,8 @@ package main
 import (
 	"encoding/csv"
 	"fmt"
+	"github.com/syzer/go-lynda/lib"
 	"os"
-	"strconv"
 )
 
 func main() {
@@ -23,22 +23,8 @@ func main() {
 		panic(err)
 	}
 
-	// atmospheric, baromertic, wind speed
-	var atTotal, bmTotal, wsTotal, count float64
-
-	for i, row := range rows {
-		if i != 0 {
-			at, _ := strconv.ParseFloat(row[1], 64)
-			bm, _ := strconv.ParseFloat(row[2], 64)
-			ws, _ := strconv.ParseFloat(row[7], 64)
-			atTotal += at
-			bmTotal += bm
-			wsTotal += ws
-			count++
-		}
-	}
-	fmt.Println("Total ", count)
-	fmt.Println("Mean Air ", atTotal / count)
-	fmt.Println("Mean Barometric ", bmTotal / count)
-	fmt.Println("Mean  Wind Speed ", wsTotal / count)
+	fmt.Println("Total ", len(rows)-1)
+	fmt.Println("Mean Air ", lib.Mean(rows, 1), " Median ", lib.Median(rows, 1))
+	fmt.Println("Mean Barometric ", lib.Mean(rows, 2), " Median ", lib.Median(rows, 2))
+	fmt.Println("Mean Wind Speed ", lib.Mean(rows, 7), " Median ", lib.Median(rows, 7))
 }
