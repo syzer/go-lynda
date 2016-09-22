@@ -13,8 +13,14 @@ type pixel struct {
 	r, g, b, a uint32
 }
 
+type jpegImg struct {
+	fileName string
+	pixels   []pixel
+}
+
 func main() {
-	imgs := loadImgs("./img_processing/img")
+	// TODO error handling
+	imgs, _ := loadImgs("./img_processing/img")
 	for i, img := range imgs {
 		for j, pixel := range img {
 			fmt.Println("Image ", i, "\t pixel", j, "\t RGBA", pixel)
@@ -43,22 +49,24 @@ func getPixels(img image.Image) []pixel {
 	return pixels
 }
 
-func loadImgs(dir string) [][]pixel {
-	var images [][]pixel
+// TODO check for just image extensions
+func loadImgs(dir string) ([]string, error) {
+	var images []string
 
-	filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
+	wFunc := func(path string, info os.FileInfo, err error) error {
 		if info.IsDir() {
 			return nil
 		}
-		img := loadImage(path)
-		pixels := getPixels(img)
-		images = append(images, pixels)
+		images = append(images, path)
 		return nil
-	})
+	}
 
-	return images
+	if err := filepath.Walk(dir, wFunc); err != nil {
+		return nil, err
+	}
+
+	return images, nil
 }
-
 
 func loadImage(filename string) image.Image {
 	f, err := os.Open(filename)
