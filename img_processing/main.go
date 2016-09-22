@@ -17,7 +17,7 @@ func main() {
 	imgs := loadImgs("./img_processing/img")
 	for i, img := range imgs {
 		for j, pixel := range img {
-			fmt.Println("Image", i, "\t pixel", j, "\t RGBA", pixel)
+			fmt.Println("Image ", i, "\t pixel", j, "\t RGBA", pixel)
 			if j == 2 {
 				break
 			}
