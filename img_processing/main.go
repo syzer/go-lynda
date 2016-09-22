@@ -10,7 +10,7 @@ import (
 )
 
 type pixel struct {
-	r, q, b, a int
+	r, q, b, a uint32
 }
 
 func main() {
@@ -33,9 +33,9 @@ func getPixels(img image.Image) []pixel {
 	for i := 0; i < bounds.Dx()*bounds.Dy(); i++ {
 		x := i % bounds.Dx()
 		y := i / bounds.Dx()
-		r, g, b, a := img.At(x, y).RGBA()
+		r, _, b, a := img.At(x, y).RGBA()
 		pixels[i].r = r
-		pixels[i].g = g
+		//pixels[i].g = g
 		pixels[i].b = b
 		pixels[i].a = a
 	}
