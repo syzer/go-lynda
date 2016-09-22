@@ -23,6 +23,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
 	fmt.Println("Total ", len(rows)-1)
 	fmt.Println("Mean Air ", lib.Mean(rows, 1), " Median ", lib.Median(rows, 1))
 	fmt.Println("Mean Barometric ", lib.Mean(rows, 2), " Median ", lib.Median(rows, 2))
